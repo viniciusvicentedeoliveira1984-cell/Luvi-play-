@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luvi Play</title>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#101020;color:white;font-family:Arial,sans-serif}
+header{background:#6c35d9;padding:22px;text-align:center}
+header h1{margin:0;font-size:32px}
+header p{margin:8px 0 0}
+nav{display:flex;gap:8px;padding:14px;justify-content:center;flex-wrap:wrap}
+button{background:#6c35d9;color:white;border:0;border-radius:8px;padding:12px 16px;font-size:15px;cursor:pointer}
+button.active{background:#a77bff}
+main{padding:16px}
+h2{margin-top:8px}
+input{width:100%;padding:13px;border-radius:8px;border:0;margin:8px 0 18px;font-size:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:12px}
+.card{background:#20203a;border-radius:12px;padding:20px 12px;text-align:center;min-height:110px}
+.emoji{font-size:32px}
+.note{color:#c7c7da;font-size:14px;line-height:1.5}
+</style>
+</head>
+<body>
+<header>
+<h1>LUVI PLAY</h1>
+<p>Seu espaço de diversão!</p>
+</header>
+<nav>
+<button class="active" onclick="mostrar('inicio',this)">Início</button>
+<button onclick="mostrar('filmes',this)">Filmes</button>
+<button onclick="mostrar('series',this)">Séries</button>
+<button onclick="mostrar('tv',this)">TV ao vivo</button>
+<button onclick="mostrar('ufc',this)">UFC</button>
+</nav>
+<main>
+<input id="busca" placeholder="Buscar filmes, séries..." oninput="filtrar()">
+<section id="conteudo">
+<h2>Bem-vindo ao Luvi Play!</h2>
+<p class="note">Escolha uma categoria para explorar.</p>
+<div class="grid">
+<div class="card"><div class="emoji">🎬</div><h3>Filmes</h3><p class="note">Explore sua próxima sessão.</p></div>
+<div class="card"><div class="emoji">📺</div><h3>Séries</h3><p class="note">Descubra novas histórias.</p></div>
+<div class="card"><div class="emoji">📡</div><h3>TV ao vivo</h3><p class="note">Acesse canais com transmissão autorizada.</p></div>
+</div>
+</section>
+<p class="note">Os conteúdos serão exibidos aqui quando adicionarmos fontes autorizadas.</p>
+</main>
+<script>
+function mostrar(tipo,botao){
+document.querySelectorAll('nav button').forEach(b=>b.classList.remove('active'));
+if(botao) botao.classList.add('active');
+const c=document.getElementById('conteudo');
+const dados={
+inicio:['Bem-vindo ao Luvi Play!','Escolha uma categoria para explorar.'],
+filmes:['Filmes','Adicione filmes de fontes autorizadas.'],
+series:['Séries','Adicione séries de fontes autorizadas.'],
+tv:['TV ao vivo',`<p><a href="https://www.camara.leg.br/tv/aovivo/embed" target="_blank">TV Câmara</a></p><p><a href="https://www12.senado.leg.br/tv/" target="_blank">TV Senado</a></p><p><a href="https://globoplay.globo.com/agora-na-tv/" target="_blank">Globo ao vivo</a></p><p><a href="https://recordtv.r7.com/" target="_blank">Record — site oficial</a></p><p><a href="https://www.sbt.com.br/ao-vivo" target="_blank">SBT ao vivo</a></p><p><a href="https://www.band.com.br/ao-vivo" target="_blank">Band ao vivo</a></p><p><a href="https://globoplay.globo.com/canais/canal-gnt/" target="_blank">GNT — Globoplay</a></p><p><a href="https://www.youtube.com/@CazeTV" target="_blank">CazéTV — esportes</a></p><p><a href="https://www.youtube.com/@espnbrasil" target="_blank">ESPN Brasil — vídeos</a></p>`],
+ufc:['UFC','Transmissões oficiais: <a href="https://www.paramountplus.com/" target="_blank">Abrir Paramount+</a>']
+};
+if(!dados[tipo]) tipo='inicio';
+c.innerHTML='<h2>'+dados[tipo][0]+'</h2><div class="note">'+dados[tipo][1]+'</div>';
+}
+function filtrar(){
+const termo=document.getElementById('busca').value.toLowerCase();
+document.querySelectorAll('.card').forEach(c=>{
+c.style.display=c.innerText.toLowerCase().includes(termo)?'':'none';
+});
+}
+</script>
+</body>
+</html>
+
